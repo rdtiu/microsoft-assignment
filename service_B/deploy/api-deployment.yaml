@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: razvantiu/api:v1.3
+        livenessProbe:
+          httpGet:
+            path: /livez
+            port: 5000
+          initialDelaySeconds: 1
+          periodSeconds: 5
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 5
+
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 5000
+          initialDelaySeconds: 1
+          periodSeconds: 5
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 5
+      
+      imagePullSecrets:
+      - name: razvantiu-imagepull
