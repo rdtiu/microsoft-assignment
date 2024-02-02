@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitcoin-server
+  namespace: bitcoin-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bitcoin-server
+  template:
+    metadata:
+      labels:
+        app: bitcoin-server
+    spec:
+      containers:
+      - name: bitcoin-server
+        image: razvantiu/bitcoin-server:v1.1
+        livenessProbe:
+          httpGet:
+            path: /livez
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 5
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 5
+
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 5
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 5
+      
+      imagePullSecrets:
+      - name: razvantiu-imagepull

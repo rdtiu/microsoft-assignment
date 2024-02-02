@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bitcoin-server-service
+  namespace: bitcoin-server
+spec:
+  selector:
+    app: bitcoin-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
