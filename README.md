@@ -21,7 +21,7 @@ User name,Access key ID,Secret access key
 power_usr,XXXXXXXX,XXXXXXXX
 ```
 
-and import it using the following commnad
+and import it using the following command
 ```bash
 aws configure --profile power_usr import --csv file://<path_to_credentials_downloaded.csv>
 ```
@@ -38,7 +38,7 @@ terraform plan
 terraform apply
 ```
 
-After applying the receipe defined in terraform files a new EKS cluster will be created in your account
+After applying the recipe defined in terraform files a new EKS cluster will be created in your account
 and the following objects:
 
 - VPC
@@ -66,7 +66,7 @@ Deployment can be verified via:
 kubectl -n ingress-nginx get all
 ```
 
-and the public adreess is the EXTERNAL-IP of service/ingress-nginx-controller and it will be used for making https calls: 
+and the public address is the EXTERNAL-IP of service/ingress-nginx-controller and it will be used for making https calls: 
 
 
 ```bash
@@ -120,15 +120,18 @@ from DockerHub and in order to deploy the service the same deploy.sh script shou
 executed.
 
 ## Test connection to service_A
+```bash
 curl -i -H "Host: bitcoin-server.com" <service/ingress-nginx-controller EXTERNAL_IP>
 curl -i -H "Host: bitcoin-server.com" <service/ingress-nginx-controller EXTERNAL_IP>/price
 curl -i -H "Host: bitcoin-server.com" <service/ingress-nginx-controller EXTERNAL_IP>/average
+```
 
 ## Test connection to service_B
+```bash
 curl -i -H "Host: api.com" <service/ingress-nginx-controller EXTERNAL_IP>
 curl -i -H "Host: api.com" <service/ingress-nginx-controller EXTERNAL_IP>/livez
 curl -i -H "Host: api.com" <service/ingress-nginx-controller EXTERNAL_IP>/readyz
-
+```
 
 # Cleanup EKS cluster
 
